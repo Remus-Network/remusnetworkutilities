@@ -41,6 +41,8 @@ We value your feedback and encourage you to report any bugs or suggestions you m
 
 ## License
 
-RemusNetworkUtilities is released under the [MIT License](https://opensource.org/licenses/MIT). Feel free to use, modify, and distribute this mod in accordance with the license terms.
+RemusNetworkUtilities is released under the [GNU General Public License (GPL)](https://www.gnu.org/licenses/gpl-3.0.en.html) version 3.0. You are free to use, modify, and distribute this mod in accordance with the terms and conditions of the GPL version 3. 
+
+Please refer to the [full text of the GNU General Public License (GPL) version 3](https://www.gnu.org/licenses/gpl-3.0.en.html) for more details.
 
 **Note:** This README provides a general overview of the RemusNetworkUtilities mod. For more detailed information, refer to the mod's documentation or the official repository.
