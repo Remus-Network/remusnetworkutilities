@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.remusnetworkutilities.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ServerLoginNetworkHandlerMixin",
+    "SpongeDryingMixin",
+    "accessors.ServerLoginNetworkHandlerAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "remusnetworkutilities",
+	"version": "${version}",
+	"name": "RemusNetworkUtilities",
+	"description": "Utilities used for RemusNetwork server.",
+	"authors": [
+		"SirRemus"
+	],
+	"contact": {
+		"sources": "https://github.com/SirRemus/RemusNetworkUtilities"
+	},
+	"license": "MIT",
+	"icon": "assets/remusnetworkutilities/remusnetworkutilities.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.remusnetworkutilities.Main"
+		]
+	},
+	"mixins": [
+		"remusnetworkutilities.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "1.20",
+		"java": ">=17",
+		"fabric-api": "0.83.0+1.20"
+	}
+}
