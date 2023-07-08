@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.remusnetworkutilities.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "RedstoneWireBlock_skipperMixin",
+    "ServerLoginNetworkHandlerMixin",
+    "SpongeDryingMixin",
+    "accessors.ServerLoginNetworkHandlerAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
