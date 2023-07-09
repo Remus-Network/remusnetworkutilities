@@ -1,6 +1,7 @@
 package net.remusnetworkutilities.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,11 +27,13 @@ public class SpongeDryingMixin {
             ci.cancel();
         }
     }
+    @Unique
     private boolean isOnMagmaBlock(World world, BlockPos pos) {
         BlockPos belowPos = pos.down();
         BlockState blockState = world.getBlockState(belowPos);
         return blockState.getBlock() == Blocks.MAGMA_BLOCK;
     }
+    @Unique
     private boolean isSubmergedInWater(World world, BlockPos pos) {
         for (Direction direction : Direction.values()) {
             if (world.getFluidState(pos.offset(direction, 2)).isIn(FluidTags.WATER)) {

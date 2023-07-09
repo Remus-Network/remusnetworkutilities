@@ -29,8 +29,11 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.netty:netty:4.0.0.Alpha8'
+	implementation 'io.netty:netty-all:5.0.0.Alpha2'
 
-    // To change the versions see the gradle.properties file
+
+	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"

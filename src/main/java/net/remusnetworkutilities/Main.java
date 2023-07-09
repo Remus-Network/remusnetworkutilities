@@ -14,7 +14,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import static net.minecraft.data.DataProvider.LOGGER;
 import static net.minecraft.server.command.CommandManager.literal;
+
 public class Main implements ModInitializer {
 	public static Properties CONFIG;
 	private static final String CONFIG_FILE = "config/remusnetworkutilities.properties";
@@ -22,7 +24,16 @@ public class Main implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LOGGER.info("RemusNetwork is initializing");
+
+		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+			LOGGER.info("Server is stopping, shutting down ExecutorService");
+			ExecutorServiceManager.shutdownExecutor();
+			// ... rest of your code ...
+		});
+
 		CONFIG = new Properties();
+		loadConfig();
 		try {
 			FileInputStream in = new FileInputStream(CONFIG_FILE);
 			CONFIG.load(in);
@@ -55,6 +66,14 @@ public class Main implements ModInitializer {
 			dispatcher.getRoot().addChild(nodeAlias.build());
 			SetLogFilePathCommand.register(dispatcher);
 		});
+	}
+
+	private void loadConfig() {
+		CONFIG.setProperty("logFilePath", "config/failed_login_attempts.log");
+		CONFIG.setProperty("reIntroduceTrapdoorUpdateSkipping", "true");
+		CONFIG.setProperty("enableEnderChestCommand", "true");
+		CONFIG.setProperty("enableSetLogFilePathCommand", "true");
+		CONFIG.setProperty("enableFailedLoginAttemptsLogging", "true");
 	}
 
 	public static void saveConfig() {
