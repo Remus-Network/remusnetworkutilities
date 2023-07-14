@@ -57,7 +57,7 @@ public class ServerLoginNetworkHandlerMixin {
         ExecutorServiceManager.getExecutor().submit(() -> {
             try {
                 String logEntry = String.format("%s [Failed Login] IP: %s Player: %s Message: %s\n", LocalDateTime.now().format(formatter), ipAddress, playerName, message);
-                Path logFilePath = Paths.get(LogFilePath);
+                Path logFilePath = Paths.get(LogFilePath, "failed_login_attempts.log");
                 if (!Files.exists(logFilePath)) {
                     LOGGER.error("Log file does not exist, creating it"); // Log when the file is created
                     Files.createFile(logFilePath);
