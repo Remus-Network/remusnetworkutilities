@@ -9,7 +9,6 @@
     "accessors.ServerLoginNetworkHandlerAccessor"
   ],
   "injectors": {
-
     "defaultRequire": 1
   }
 }
