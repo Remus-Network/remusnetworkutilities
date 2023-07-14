@@ -1,5 +1,6 @@
 package net.remusnetworkutilities;
 
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ModInitializer;
@@ -18,36 +19,33 @@ import java.util.Properties;
 import static net.minecraft.data.DataProvider.LOGGER;
 import static net.minecraft.server.command.CommandManager.literal;
 
+
 public class Main implements ModInitializer {
+	private static final String MODID = "remusnetworkutilities - 1.1.16";
 	public static Properties CONFIG;
 	private static final String CONFIG_FILE = "config/remusnetworkutilities.properties";
 	public static boolean reIntroduceTrapdoorUpdateSkipping = true;
-
-
 	@Override
 	public void onInitialize() {
 		Configurator.setLevel(LogManager.getLogger().getName(), Level.ALL);
-		LOGGER.info("RemusNetwork is initializing");
-
+		LOGGER.info("{} is initializing", MODID);
 		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
 			LOGGER.info("Server is stopping, shutting down ExecutorService");
 			ExecutorServiceManager.shutdownExecutor();
 		});
-
 		CONFIG = new Properties();
-		loadConfig();
 		try {
 			FileInputStream in = new FileInputStream(CONFIG_FILE);
 			CONFIG.load(in);
 			in.close();
 		} catch (IOException e) {
-			System.out.println("Could not load configuration, using defaults");
+			LOGGER.info("Could not load configuration, using defaults");
 			String parentDir = new File(CONFIG_FILE).getParent();
 			File dir = new File(parentDir);
 			if (!dir.exists()) {
 				boolean dirCreated = dir.mkdirs();
 				if (!dirCreated) {
-					System.out.println("Could not create directory: " + dir.getPath());
+					LOGGER.info("Could not create directory: " + dir.getPath());
 					System.setErr(System.out);
 				}
 			}
@@ -73,21 +71,13 @@ public class Main implements ModInitializer {
 			SetLogFilePathCommand.register(dispatcher);
 		});
 	}
-	private void loadConfig() {
-		CONFIG.setProperty("logFilePath", "config/failed_login_attempts.log");
-		CONFIG.setProperty("enableEnderChestCommand", "true");
-		CONFIG.setProperty("enableSetLogFilePathCommand", "true");
-		CONFIG.setProperty("enableFailedLoginAttemptsLogging", "true");
-	}
 	public static void saveConfig() {
 		try {
 			FileOutputStream out = new FileOutputStream(CONFIG_FILE);
 			CONFIG.store(out, null);
 			out.close();
 		} catch (IOException e) {
-			System.out.println("Could not save configuration");
+			LOGGER.info("Could not save configuration");
 		}
 	}
 }
-
-

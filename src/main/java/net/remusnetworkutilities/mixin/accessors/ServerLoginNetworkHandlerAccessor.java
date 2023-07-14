@@ -12,4 +12,5 @@ public interface ServerLoginNetworkHandlerAccessor {
     GameProfile getProfile();
     @Accessor("connection")
     ClientConnection getConnection();
+
 }

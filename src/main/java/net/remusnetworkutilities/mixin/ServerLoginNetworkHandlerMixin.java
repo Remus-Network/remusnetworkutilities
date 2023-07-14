@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,6 +22,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import static net.remusnetworkutilities.Main.CONFIG;
 
 @Mixin(ServerLoginNetworkHandler.class)
@@ -33,33 +35,38 @@ public class ServerLoginNetworkHandlerMixin {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @Inject(method = "disconnect", at = @At("HEAD"))
     public void onDisconnect(Text reason, CallbackInfo ci) {
-        // get the accessor
         ServerLoginNetworkHandlerAccessor accessor = (ServerLoginNetworkHandlerAccessor)this;
-        // get the profile and connection
         GameProfile profile = accessor.getProfile();
         String ipAddress = accessor.getConnection().getAddress().toString();
-        // log the profile and connection
         LOGGER.error("Profile: {}", profile);
         LOGGER.error("Connection: {}", accessor.getConnection());
-        // if the profile id is null, then the player is not premium
-        if (profile.getId() == null) {
-            // log the player's name and ip address
+        if (profile == null) {
+            LOGGER.error("Unknown player with IP address {} tried to join the server", ipAddress);
+            logToFile("Unknown player", ipAddress, "tried to join the server");
+        }
+        else if (profile.getId() == null) {
             LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
-            // log the player's name and ip address to the file
             logToFile(profile.getName(), ipAddress, "tried to join the server");
-        } else if (reason.equals(Text.translatable("multiplayer.disconnect.not_whitelisted"))) {
+        }
+        else if (reason.equals(Text.translatable("multiplayer.disconnect.banned"))) {
+            LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
+            logToFile(profile.getName(), ipAddress, "tried to join the server but is banned");
+        }
+        else if (reason.equals(Text.translatable("multiplayer.disconnect.not_whitelisted"))) {
             LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
             logToFile(profile.getName(), ipAddress, "tried to join the server but is not whitelisted");
         }
+
     }
     @Unique
     private void logToFile(String playerName, String ipAddress, String message) {
         ExecutorServiceManager.getExecutor().submit(() -> {
             try {
-                String logEntry = String.format("%s [Failed Login] IP: %s Player: %s Message: %s\n", LocalDateTime.now().format(formatter), ipAddress, playerName, message);
+                String logEntry = String.format("%s [Failed Login] IP: %s Player: %s Message: %s\n",
+                        LocalDateTime.now().format(formatter), ipAddress, playerName, message);
                 Path logFilePath = Paths.get(LogFilePath, "failed_login_attempts.log");
                 if (!Files.exists(logFilePath)) {
-                    LOGGER.error("Log file does not exist, creating it"); // Log when the file is created
+                    LOGGER.error("Log file does not exist, creating it");
                     Files.createFile(logFilePath);
                     if (Files.exists(logFilePath)) {
                         LOGGER.error("Log file was created successfully");
@@ -68,6 +75,7 @@ public class ServerLoginNetworkHandlerMixin {
                     }
                 }
                 Files.write(logFilePath, logEntry.getBytes(), StandardOpenOption.APPEND);
+                LOGGER.error("Player {} with IP address {} {} was logged", playerName, ipAddress, message);
             } catch (IOException e) {
                 LOGGER.error("An error occurred while writing to the log file", e);
             }
@@ -78,3 +86,5 @@ public class ServerLoginNetworkHandlerMixin {
         Configurator.setLevel(LogManager.getLogger(ServerLoginNetworkHandlerMixin.class).getName(), Level.ALL);
     }
 }
+
+

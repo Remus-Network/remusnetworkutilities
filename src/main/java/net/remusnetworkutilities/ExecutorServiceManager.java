@@ -1,10 +1,11 @@
 package net.remusnetworkutilities;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExecutorServiceManager {
+    private static final Logger LOGGER = Logger.getLogger(ExecutorServiceManager.class.getName());
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static ExecutorService getExecutor() {
@@ -16,13 +17,14 @@ public class ExecutorServiceManager {
         try {
             if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
                 executor.shutdownNow();
-                if (!executor.awaitTermination(60, TimeUnit.SECONDS))
-                    System.err.println("ExecutorService did not terminate");
+                if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+                    LOGGER.severe("ExecutorService did not terminate");
+                }
             }
         } catch (InterruptedException ie) {
             executor.shutdownNow();
             Thread.currentThread().interrupt();
+            LOGGER.log(Level.SEVERE, "ExecutorService shutdown interrupted", ie);
         }
     }
 }
-
