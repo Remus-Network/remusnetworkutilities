@@ -23,8 +23,12 @@ jobs:
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
+      - name: Extract current branch name
+        shell: bash
+        run: ref="${GITHUB_REF#refs/heads/}" && echo "branch=${ref////-}" >> $GITHUB_OUTPUT
+        id: ref
       - name: capture build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: Artifacts
-          path: build/libs/
+          name: remusnetworkutilies-artifacts${{ steps.ref.outputs.branch }}
+          path: build/libs/*[0-9].jar
