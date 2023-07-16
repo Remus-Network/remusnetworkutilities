@@ -23,7 +23,6 @@ enabled  = true
 port     = 25565
 filter   = minecraft
 logpath  = /path/to/failed_login_attempts.log
-maxretry = 3
 ```
 
 ## Installation
