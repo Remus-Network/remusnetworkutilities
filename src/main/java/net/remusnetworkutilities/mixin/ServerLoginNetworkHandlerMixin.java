@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -76,7 +75,7 @@ public class ServerLoginNetworkHandlerMixin {
                 }
                 Files.write(logFilePath, logEntry.getBytes(), StandardOpenOption.APPEND);
                 LOGGER.error("Player {} with IP address {} {} was logged", playerName, ipAddress, message);
-            } catch (IOException e) {
+            } catch (Exception e) { // Catch all exceptions
                 LOGGER.error("An error occurred while writing to the log file", e);
             }
         });

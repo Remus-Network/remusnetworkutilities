@@ -3,10 +3,13 @@
   "package": "net.remusnetworkutilities.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BarrelBlockEntityMixin",
+    "BarrelBlockMixin",
     "RedstoneWireBlock_skipperMixin",
     "ServerLoginNetworkHandlerMixin",
     "SpongeDryingMixin",
-    "accessors.ServerLoginNetworkHandlerAccessor"
+    "accessors.ServerLoginNetworkHandlerAccessor",
+    "AbstractBarrelBlock"
   ],
   "injectors": {
     "defaultRequire": 1
