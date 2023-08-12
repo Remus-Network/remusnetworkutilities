@@ -3,6 +3,7 @@
   "package": "net.remusnetworkutilities.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EndermanPickUpBlockMixin",
     "RedstoneWireBlock_skipperMixin",
     "ServerLoginNetworkHandlerMixin",
     "SpongeDryingMixin",
