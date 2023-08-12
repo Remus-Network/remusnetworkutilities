@@ -1,15 +1,9 @@
 package net.remusnetworkutilities.mixin;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Util;
 import net.remusnetworkutilities.ExecutorServiceManager;
-import net.remusnetworkutilities.commands.SetLogFilePathCommand;
 import net.remusnetworkutilities.mixin.accessors.ServerLoginNetworkHandlerAccessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,24 +12,16 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
-import static net.minecraft.text.Text.*;
+
+import static net.minecraft.text.Text.translatable;
 import static net.remusnetworkutilities.Main.CONFIG;
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
-import net.remusnetworkutilities.Main;
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
 
 @Mixin(ServerLoginNetworkHandler.class)
 public class ServerLoginNetworkHandlerMixin {
