@@ -15,7 +15,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.remusnetworkutilities.carpetedition.Main"
+          "net.remusnetworkutilities.Main"
 		]
 	},
 	"mixins": [

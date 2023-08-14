@@ -1,4 +1,4 @@
-package net.remusnetworkutilities.carpetedition;
+package net.remusnetworkutilities;
 
 import java.util.concurrent.*;
 import java.util.logging.Level;

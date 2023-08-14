@@ -1,4 +1,4 @@
-package net.remusnetworkutilities.carpetedition.mixin;
+package net.remusnetworkutilities.mixin;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
-import net.remusnetworkutilities.carpetedition.RemusNetworkUtilitiesSettings;
+import net.remusnetworkutilities.RemusNetworkUtilitiesSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;

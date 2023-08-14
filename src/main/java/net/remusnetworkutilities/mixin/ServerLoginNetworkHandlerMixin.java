@@ -1,12 +1,12 @@
-package net.remusnetworkutilities.carpetedition.mixin;
+package net.remusnetworkutilities.mixin;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 import net.minecraft.text.Text;
-import net.remusnetworkutilities.carpetedition.ExecutorServiceManager;
-import net.remusnetworkutilities.carpetedition.Main;
-import net.remusnetworkutilities.carpetedition.RemusNetworkUtilitiesSettings;
-import net.remusnetworkutilities.carpetedition.mixin.accessors.ServerLoginNetworkHandlerAccessor;
+import net.remusnetworkutilities.Main;
+import net.remusnetworkutilities.RemusNetworkUtilitiesSettings;
+import net.remusnetworkutilities.ExecutorServiceManager;
+import net.remusnetworkutilities.mixin.accessors.ServerLoginNetworkHandlerAccessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,7 +35,8 @@ public class ServerLoginNetworkHandlerMixin {
     @Inject(method = "disconnect", at = @At("HEAD"))
     public void onDisconnect(Text reason, CallbackInfo ci){
         if (RemusNetworkUtilitiesSettings.FailToBan) {
-            {ServerLoginNetworkHandlerAccessor accessor = (ServerLoginNetworkHandlerAccessor)this;
+            {
+                ServerLoginNetworkHandlerAccessor accessor = (ServerLoginNetworkHandlerAccessor)this;
             GameProfile profile = accessor.getProfile();
             String ipAddress = accessor.getConnection().getAddress().toString();
             LOGGER.error("Profile: {}", profile);

@@ -1,4 +1,4 @@
-package net.remusnetworkutilities.carpetedition;
+package net.remusnetworkutilities;
 
 import carpet.api.settings.RuleCategory;
 import com.mojang.brigadier.CommandDispatcher;
@@ -6,8 +6,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.command.ServerCommandSource;
-import net.remusnetworkutilities.carpetedition.commands.EnderChestCommand;
-import net.remusnetworkutilities.carpetedition.commands.SetLogFilePathCommand;
+import net.remusnetworkutilities.commands.EnderChestCommand;
+import net.remusnetworkutilities.commands.SetLogFilePathCommand;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.config.Configurator;

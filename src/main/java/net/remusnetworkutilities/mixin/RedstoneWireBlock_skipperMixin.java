@@ -1,10 +1,10 @@
-package net.remusnetworkutilities.carpetedition.mixin;
+package net.remusnetworkutilities.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.block.TrapdoorBlock;
-import net.remusnetworkutilities.carpetedition.RemusNetworkUtilitiesSettings;
+import net.remusnetworkutilities.RemusNetworkUtilitiesSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 

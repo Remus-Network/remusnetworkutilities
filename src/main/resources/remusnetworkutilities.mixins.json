@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "net.remusnetworkutilities.carpetedition.mixin",
+  "package": "net.remusnetworkutilities.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "EndermanPickUpBlockMixin",

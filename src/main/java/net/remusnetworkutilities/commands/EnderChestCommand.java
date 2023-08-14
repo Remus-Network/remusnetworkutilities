@@ -1,4 +1,4 @@
-package net.remusnetworkutilities.carpetedition.commands;
+package net.remusnetworkutilities.commands;
 
 import net.minecraft.server.command.ServerCommandSource;
 import com.mojang.brigadier.context.CommandContext;
@@ -9,7 +9,7 @@ import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.remusnetworkutilities.carpetedition.RemusNetworkUtilitiesSettings;
+import net.remusnetworkutilities.RemusNetworkUtilitiesSettings;
 
 public class EnderChestCommand {
     public static void openEnderChest(CommandContext<ServerCommandSource> context) {
