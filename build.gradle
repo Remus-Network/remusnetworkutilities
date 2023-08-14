@@ -1,5 +1,6 @@
 plugins {
 	id 'fabric-loom' version '1.2-SNAPSHOT'
+	id 'io.github.juuxel.loom-quiltflower' version '1.10.0'
 	id 'maven-publish'
 }
 
@@ -16,21 +17,20 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
-	repositories {
-		maven { url 'https://jitpack.io' }
+	maven {
+		url 'https://masa.dy.fi/maven'
 	}
-
-	dependencies {
-		modImplementation 'com.github.Fallen-Breath:conditional-mixin:v0.3.2'
-
-		// suggested, to bundle it into your mod jar
-		include "com.github.Fallen-Breath:conditional-mixin:v0.3.2"
-	}
+	maven { url 'https://jitpack.io' }
 }
 
+	dependencies {
+		modImplementation "carpet:fabric-carpet:${project.minecraft_version}-${project.carpet_core_version}"
+	}
+
+
 dependencies {
-    implementation 'io.netty:netty:4.0.0.Alpha8'
-	implementation 'io.netty:netty-all:5.0.0.Alpha2'
+    //implementation 'io.netty:netty:4.0.0.Alpha8'
+	//implementation 'io.netty:netty-all:5.0.0.Alpha2'
 
 
 	// To change the versions see the gradle.properties file
@@ -40,6 +40,8 @@ dependencies {
 	include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixinextras_version}")))
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+
 
 
 

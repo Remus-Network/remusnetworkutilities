@@ -1,4 +1,4 @@
-package net.remusnetworkutilities.mixin.accessors;
+package net.remusnetworkutilities.carpetedition.mixin.accessors;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.network.ClientConnection;

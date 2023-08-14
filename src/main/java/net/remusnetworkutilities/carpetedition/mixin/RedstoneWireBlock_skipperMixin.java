@@ -1,10 +1,10 @@
-package net.remusnetworkutilities.mixin;
+package net.remusnetworkutilities.carpetedition.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.block.TrapdoorBlock;
-import net.remusnetworkutilities.Main;
+import net.remusnetworkutilities.carpetedition.RemusNetworkUtilitiesSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 
@@ -16,6 +16,6 @@ public class RedstoneWireBlock_skipperMixin {
             constant = @Constant(classValue = TrapdoorBlock.class)
     )
     public boolean trapdoorUpdateSkipping(Object obj, Operation<Boolean> original) {
-        return !Main.reIntroduceTrapdoorUpdateSkipping && original.call(obj);
+        return !RemusNetworkUtilitiesSettings.reIntroduceTrapdoorUpdateSkipping && original.call(obj);
     }
 }

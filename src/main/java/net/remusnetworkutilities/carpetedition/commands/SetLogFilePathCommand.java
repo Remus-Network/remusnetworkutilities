@@ -1,11 +1,11 @@
-package net.remusnetworkutilities.commands;
+package net.remusnetworkutilities.carpetedition.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
-import net.remusnetworkutilities.Main;
+import net.remusnetworkutilities.carpetedition.Main;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 public class SetLogFilePathCommand {

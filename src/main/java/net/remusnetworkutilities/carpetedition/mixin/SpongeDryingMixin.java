@@ -1,4 +1,4 @@
-package net.remusnetworkutilities.mixin;
+package net.remusnetworkutilities.carpetedition.mixin;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,14 +11,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
+import net.remusnetworkutilities.carpetedition.RemusNetworkUtilitiesSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-@Mixin(WetSpongeBlock.class)
-public abstract class SpongeDryingMixin {
 
+@Mixin(WetSpongeBlock.class)
+public abstract class SpongeDryingMixin { // Sponge Drying
     @Inject(method = "onBlockAdded", at = @At("HEAD"), cancellable = true)
     private void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify, CallbackInfo ci) {
         if ((world.getDimension().ultrawarm() || isOnMagmaBlock(world, pos) && !isSubmergedInWater(world, pos))) {
@@ -30,6 +31,7 @@ public abstract class SpongeDryingMixin {
     }
     @Unique
     private boolean isOnMagmaBlock(World world, BlockPos pos) {
+        if (!RemusNetworkUtilitiesSettings.SpongeDrying) return false;
         BlockPos belowPos = pos.down();
         BlockState blockState = world.getBlockState(belowPos);
         return blockState.getBlock() == Blocks.MAGMA_BLOCK;
