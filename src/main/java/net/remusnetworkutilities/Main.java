@@ -18,7 +18,6 @@ import java.util.Properties;
 import static net.minecraft.data.DataProvider.LOGGER;
 import static net.minecraft.server.command.CommandManager.literal;
 
-
 public class Main implements ModInitializer {
 	private static final String MODID = "remusnetworkutilities - 1.1.16";
 	public static Properties CONFIG;
