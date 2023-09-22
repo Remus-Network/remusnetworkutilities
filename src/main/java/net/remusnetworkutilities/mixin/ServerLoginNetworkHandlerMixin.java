@@ -3,6 +3,8 @@ package net.remusnetworkutilities.mixin;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 import net.minecraft.text.Text;
+import net.remusnetworkutilities.Main;
+import net.remusnetworkutilities.RemusNetworkUtilitiesSettings;
 import net.remusnetworkutilities.ExecutorServiceManager;
 import net.remusnetworkutilities.mixin.accessors.ServerLoginNetworkHandlerAccessor;
 import org.apache.logging.log4j.LogManager;
@@ -21,39 +23,42 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static net.minecraft.text.Text.translatable;
-import static net.remusnetworkutilities.Main.CONFIG;
 
 @Mixin(ServerLoginNetworkHandler.class)
 public class ServerLoginNetworkHandlerMixin {
     @Unique
-    private static final String LogFilePath = CONFIG.getProperty("logFilePath");
+    private static final String LogFilePath = Main.CONFIG.getProperty("logFilePath");
     @Unique
     private static final Logger LOGGER = LogManager.getLogger();
     @Unique
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @Inject(method = "disconnect", at = @At("HEAD"))
-    public void onDisconnect(Text reason, CallbackInfo ci) {
-        ServerLoginNetworkHandlerAccessor accessor = (ServerLoginNetworkHandlerAccessor)this;
-        GameProfile profile = accessor.getProfile();
-        String ipAddress = accessor.getConnection().getAddress().toString();
-        LOGGER.error("Profile: {}", profile);
-        LOGGER.error("Connection: {}", accessor.getConnection());
-        if (profile == null) {
-            LOGGER.error("Unknown player with IP address {} tried to join the server", ipAddress);
-            logToFile("Unknown player", ipAddress, "tried to join the server");
+    public void onDisconnect(Text reason, CallbackInfo ci){
+        if (RemusNetworkUtilitiesSettings.FailToBan) {
+            {
+                ServerLoginNetworkHandlerAccessor accessor = (ServerLoginNetworkHandlerAccessor)this;
+            GameProfile profile = accessor.getProfile();
+            String ipAddress = accessor.getConnection().getAddress().toString();
+            LOGGER.error("Profile: {}", profile);
+            LOGGER.error("Connection: {}", accessor.getConnection());
+            if (profile == null) {
+                LOGGER.error("Unknown player with IP address {} tried to join the server", ipAddress);
+                logToFile("Unknown player", ipAddress, "tried to join the server");
+            }
+            else if (profile.getId() == null) {
+                LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
+                logToFile(profile.getName(), ipAddress, "tried to join the server");
+            }
+            else if (reason.equals(translatable("multiplayer.disconnect.banned"))) {
+                LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
+                logToFile(profile.getName(), ipAddress, "tried to join the server but is banned");
+            }
+            else if (reason.equals(translatable("multiplayer.disconnect.not_whitelisted"))) {
+                LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
+                logToFile(profile.getName(), ipAddress, "tried to join the server but is not whitelisted");
+            }
         }
-        else if (profile.getId() == null) {
-            LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
-            logToFile(profile.getName(), ipAddress, "tried to join the server");
-        }
-        else if (reason.equals(translatable("multiplayer.disconnect.banned"))) {
-            LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
-            logToFile(profile.getName(), ipAddress, "tried to join the server but is banned");
-        }
-        else if (reason.equals(translatable("multiplayer.disconnect.not_whitelisted"))) {
-            LOGGER.error("Player {} with IP address {} tried to join the server", profile.getName(), ipAddress);
-            logToFile(profile.getName(), ipAddress, "tried to join the server but is not whitelisted");
-        }
+    }
     }
     @Unique
     private void logToFile(String playerName, String ipAddress, String message) {

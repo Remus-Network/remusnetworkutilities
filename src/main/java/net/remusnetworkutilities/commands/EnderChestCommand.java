@@ -9,9 +9,12 @@ import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.remusnetworkutilities.RemusNetworkUtilitiesSettings;
+
 public class EnderChestCommand {
     public static void openEnderChest(CommandContext<ServerCommandSource> context) {
-        try {
+        if (RemusNetworkUtilitiesSettings.EnderChestCommand)
+            try {
             ServerPlayerEntity player = context.getSource().getPlayer();
             if (player != null) {
                 if (hasEnderChestInInventory(player)) {
